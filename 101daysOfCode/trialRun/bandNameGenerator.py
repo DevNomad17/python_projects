@@ -1,0 +1,6 @@
+print("Hello mister or missus ;o)")
+print("Which noble village did you grew up in?")
+city = input()
+print("Suggest a reasonably silly name of a pet")
+pet = input()
+print("Generating a ba(n)d name suggestion >>> " + city + " " + pet)
