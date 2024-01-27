@@ -1,0 +1,7 @@
+print("\n---------- Start of program ----------- ") 
+print("type number: ")
+n = input()
+out = int(n[0]) + int(n[1])
+print("Sum of digits is: " + str(out))
+#print(type(n))
+print("---------- End of program -------------\n") 
