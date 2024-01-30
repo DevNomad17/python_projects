@@ -30,16 +30,16 @@ ____/______/______/______/______/_____"=.o|o_.--""___/______/______/______/____
 
 print("Welcome to Treasure Island.")
 print("Your mission is to find the treasure.\n")
-first = input("You are at the first crossroad in the deep forest. Do you turn left or right? ")
+first = input("You are at the first crossroad in the deep forest. Do you turn left or right? ").lower()
 if (first == "left"):
-    second = input("There is a high tide obstructing the passage to the island. Do you want to swim to the island or wait for the tide to recede? ")
+    second = input("There is a high tide obstructing the passage to the island. Do you want to swim to the island or wait for the tide to recede? ").lower()
     if (second == "wait"):
         third = input('''
-            You find yourself standing in front of three doors,
-            each painted in a different color: red, blue, and yellow.
-                        
-            As you approach the doors, you notice that each one has a different
-            symbol etched into it: a dragon, a sword, and a shield. What do you do? ''')
+You find yourself standing in front of three doors,
+each painted in a different color: red, blue, and yellow.                        
+
+As you approach the doors, you notice that each one has a different
+symbol etched into it: a dragon, a sword, and a shield. What do you do? ''').lower()
         if (third == "red"):
             print("\nYou are burned by fire!!! ---*** GAME OVER ***---")
         elif (third == "blue"):
