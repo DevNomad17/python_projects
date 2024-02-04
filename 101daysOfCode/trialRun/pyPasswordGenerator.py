@@ -13,7 +13,38 @@ n_numbers = int(input("How many numbers would you like to have in your password?
 n_symbols = int(input("How many symbols would you like to have in your password? "))
 # ascii 33-47 for symbols
 
-print(f"Here is your password: {password}")
+settings = [[n_letters,"letters"],[n_numbers,"numbers"],[n_symbols,"symbols"]]
+
+#print(settings)
+
+for j in range(0,3):
+    for i, set in enumerate(settings):
+        if (set[0]==0):
+            settings.pop(i)
+
+
+total_chars = n_letters+n_numbers+n_symbols
+password = ""
+for i in range(0,total_chars):
+    if settings:
+        rand_index = random.randint(0,len(settings)-1)
+        character = settings[rand_index][1]
+        if (character == "letters"):
+            if (random.randint(0,1)==0):
+                password+=chr(random.randint(65,90))
+            else:
+                password+=chr(random.randint(97,122))
+        elif (character == "numbers"):
+            password+=chr(random.randint(48,57))
+        else:
+            password+=chr(random.randint(33,47))
+        if (settings[rand_index][0]==1):
+            settings.pop(rand_index)
+        else:
+            settings[rand_index][0]-=1
+        
+
+print(f"\nHere is your password: {password}")
 
 print("\n------------ End of program " + file_name + "-----------\n") 
 
