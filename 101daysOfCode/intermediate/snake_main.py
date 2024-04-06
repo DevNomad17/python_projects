@@ -30,6 +30,10 @@ screen.onkey(snake.right, "Right")
 game_is_on = True
 while game_is_on:
     snake.move()
+    if not snake.moving:
+        snake.hide()
+        scoreboard.game_over()
+        break
     screen.update()
     time.sleep(DELAY)
 
