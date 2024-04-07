@@ -1,6 +1,6 @@
 import time
 from turtle import Screen
-from snake import Snake
+from snake_class import Snake
 from snake_settings import DELAY, OFFSET_SEGMENT, SCREEN_HEIGHT, SCREEN_WIDTH
 from snake_food import Food
 from snake_score import Scoreboard

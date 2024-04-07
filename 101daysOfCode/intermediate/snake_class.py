@@ -31,10 +31,18 @@ class Snake:
                 return
             self.segments[i].setpos(self.segments[i - 1].pos())
         if abs(abs(self.head.xcor()) - SCREEN_WIDTH / 2) < OFFSET_SEGMENT:
-            self.head.setpos(-self.head.xcor(), self.head.ycor())
+            if self.isMovingHorizontally():
+                self.head.setpos(-self.head.xcor(), self.head.ycor())
         elif abs(abs(self.head.ycor()) - SCREEN_HEIGHT / 2) < OFFSET_SEGMENT:
-            self.head.setpos(self.head.xcor(), -self.head.ycor())
+            if not self.isMovingHorizontally():
+                self.head.setpos(self.head.xcor(), -self.head.ycor())
         self.head.forward(OFFSET_SEGMENT)
+
+    def isMovingHorizontally(self):
+        if self.head.heading() in (0, 180):
+            return True
+        else:
+            return False
 
     def hide(self):
         for i in self.segments:
