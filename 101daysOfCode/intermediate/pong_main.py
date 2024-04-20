@@ -4,7 +4,7 @@ from pong_paddle import Paddle
 from pong_ball import Ball
 import time
 
-from pong_settings import SCREEN_HEIGHT, SCREEN_WIDTH, DELAY
+from pong_settings import SCREEN_HEIGHT, SCREEN_WIDTH, DELAY, RIGHT_EDGE, LEFT_EDGE
 
 
 def setup_screen():
@@ -35,8 +35,16 @@ game_is_on = True
 while game_is_on:
     p1.move()
     p2.move()
-    ball.move()
+    ball.move(p1, p2)
     screen.update()
+    if ball.xcor() > RIGHT_EDGE:
+        score_p1.increase()
+        ball.hideturtle()
+        ball = Ball()
+    if ball.xcor() < LEFT_EDGE:
+        score_p2.increase()
+        ball.hideturtle()
+        ball = Ball()
     time.sleep(DELAY)
 #
 #     if snake.head.distance(food) < OFFSET_SEGMENT / 1.3:

@@ -61,3 +61,16 @@ class Paddle:
                     segment.setheading(self.heading)
                     segment.forward(OFFSET_SEGMENT)
 
+    def ycor_min(self):
+        y_min = UPPER_EDGE
+        for segment in self.body:
+            if segment.ycor() < y_min:
+                y_min = segment.ycor()
+        return y_min - OFFSET_SEGMENT
+
+    def ycor_max(self):
+        y_max = LOWER_EDGE
+        for segment in self.body:
+            if segment.ycor() > y_max:
+                y_max = segment.ycor()
+        return y_max + OFFSET_SEGMENT
