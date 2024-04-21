@@ -19,3 +19,7 @@ class Player(Turtle):
 
     def isInFinish(self):
         return self.ycor() > FINISH_LINE_Y
+
+    def respawn(self):
+        self.setpos(STARTING_POSITION)
+
