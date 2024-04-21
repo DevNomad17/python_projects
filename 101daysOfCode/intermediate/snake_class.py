@@ -13,12 +13,15 @@ def create_segment():
 class Snake:
     def __init__(self):
         self.segments = []
+        self.create_snake()
+        self.head = self.segments[0]
+        self.moving = True
+
+    def create_snake(self):
         for _ in range(3):
             s = create_segment()
             s.setpos(-len(self.segments) * OFFSET_SEGMENT, 0)
             self.segments.append(s)
-        self.head = self.segments[0]
-        self.moving = True
 
     def grow(self):
         s = create_segment()
@@ -30,13 +33,37 @@ class Snake:
                 self.moving = False
                 return
             self.segments[i].setpos(self.segments[i - 1].pos())
-        if abs(abs(self.head.xcor()) - SCREEN_WIDTH / 2) < OFFSET_SEGMENT:
-            if self.isMovingHorizontally():
+
+        if self.head.xcor() > SCREEN_WIDTH / 2 - 2*OFFSET_SEGMENT:
+            if self.head.heading() == RIGHT:
                 self.head.setpos(-self.head.xcor(), self.head.ycor())
-        elif abs(abs(self.head.ycor()) - SCREEN_HEIGHT / 2) < OFFSET_SEGMENT:
-            if not self.isMovingHorizontally():
+
+        elif self.head.xcor() < SCREEN_WIDTH / -2 + 2*OFFSET_SEGMENT:
+            if self.head.heading() == LEFT:
+                self.head.setpos(-self.head.xcor(), self.head.ycor())
+
+        elif self.head.ycor() > SCREEN_HEIGHT / 2 - 2*OFFSET_SEGMENT:
+            if self.head.heading() == UP:
                 self.head.setpos(self.head.xcor(), -self.head.ycor())
+
+        elif self.head.ycor() < SCREEN_HEIGHT / -2 + 2*OFFSET_SEGMENT:
+            if self.head.heading() == DOWN:
+                self.head.setpos(self.head.xcor(), -self.head.ycor())
+
+        # if abs(abs(self.head.xcor()) - SCREEN_WIDTH / 2) < OFFSET_SEGMENT:
+        #     if self.isMovingHorizontally():
+        #         self.head.setpos(-self.head.xcor(), self.head.ycor())
+        # elif abs(abs(self.head.ycor()) - SCREEN_HEIGHT / 2) < OFFSET_SEGMENT:
+        #     if not self.isMovingHorizontally():
+        #         self.head.setpos(self.head.xcor(), -self.head.ycor())
         self.head.forward(OFFSET_SEGMENT)
+
+    def reset(self):
+        self.hide()
+        self.segments.clear()
+        self.create_snake()
+        self.head = self.segments[0]
+        self.moving = True
 
     def isMovingHorizontally(self):
         if self.head.heading() in (0, 180):
