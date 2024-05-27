@@ -3,13 +3,13 @@ import xml.etree.ElementTree as ET
 import re
 
 
-INPUT_FILE_PATH_1 = "quick_prolong_apr11_to_may10.json"
-INPUT_FILE_PATH_2 = "quick_prolong_mar11_to_apr10.json"
+INPUT_FILE_PATH_1 = "../confidential_resources/quick_prolong_apr11_to_may10.json"
+INPUT_FILE_PATH_2 = "../confidential_resources/quick_prolong_mar11_to_apr10.json"
 TEMP_FILE_PATH = "temp_file.xml"
 OUTPUT_FILE_PATH_TARIFFS = "output_file_tariffs.csv"
 OUTPUT_FILE_PATH_VAS = "output_file_vas.csv"
-SYLIUS_RATEPLAN_CONFIG_PATH = "rateplan_config.txt"
-MVP_RATEPLAN_CONFIG_PATH = "mvp_rateplans.txt"
+SYLIUS_RATEPLAN_CONFIG_PATH = "../confidential_resources/rateplan_config.txt"
+MVP_RATEPLAN_CONFIG_PATH = "../confidential_resources/mvp_rateplans.txt"
 
 
 def extract_siebel_codes(text):
