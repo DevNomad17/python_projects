@@ -23,7 +23,7 @@ guessed_states_list = []
 
 while True:
     title = "Guess the State"
-    prompt = "Type the name of the state that is not revealed yet"
+    prompt = "Type the name of the state that is not revealed yet, or 'exit' to quit"
     answer_state = screen.textinput(title=f"{title} | Current score: {score}/50", prompt=prompt).title()
     if answer_state == 'Exit':
         with open(RESULT_FILE, "w") as file:
