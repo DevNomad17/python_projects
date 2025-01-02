@@ -1,9 +1,11 @@
 import pandas
 import xml.etree.ElementTree as ET
 import re
+from kibana_triplequotes_convert import convert
 
 
-INPUT_FILE_PATH_1 = "../confidential_resources/getAssets_kibana_max_magenta.json"
+INPUT_FILE_PATH_RAW = "../confidential_resources/getAssets_kibana_max_magenta.json"
+INPUT_FILE_PATH_JSON = "../confidential_resources/getAssets_kibana_max_magenta_trimmed.json"
 TEMP_FILE_PATH = "temp_file.xml"
 OUTPUT_FILE_PATH = "output.csv"
 
@@ -80,9 +82,11 @@ def create_data_frame_assets():
     return df
 
 
-tariff_output_df = create_data_frame_assets()
+# convert(INPUT_FILE_PATH_RAW, INPUT_FILE_PATH_JSON) # needs to be done only once
 
-df_json = pandas.read_json(INPUT_FILE_PATH_1)
+output_df = create_data_frame_assets()
+
+df_json = pandas.read_json(INPUT_FILE_PATH_JSON)
 
 for hit in df_json.hits.hits:
     getAssets = hit['_source']['rest.responseBody']
@@ -101,37 +105,35 @@ for hit in df_json.hits.hits:
 
     # Print the text content of the first 'orderRequestAttributes/value' element found
     if getAssetsResponse:
-        order_note = getAssetsResponse[0].text
-
-        rp_substrings = extract_rp_substrings(order_note)
-
-        # Split the multi-line string into lines
-        order_note_lines = order_note.split('\n')
-
-        # Iterate through each line and find the one that contains substrings of interest
-        router_line = None
-        for line in order_note_lines:
-            if 'router' in line or 'Wow' in line:
-                router_line = line
-                index_of_equal_sign = router_line.find('=')
-                router_line = router_line[:index_of_equal_sign].strip()
-                break
-
-        isMvp = rp_substrings in mvp_rateplan_config
-        isSylius = rp_substrings in sylius_rateplan_config
-
-        new_line = {'tariffId': rp_substrings,
-                    'tariffDesc': aggregated_rp_desc(extract_rp_names(order_note), isMvp, isSylius),
-                    'isMvp': isMvp, 'isSylius': isSylius,
-                    'router': router_line, 'stb': count_tv_hw(order_note)}
-        new_df = pandas.DataFrame([new_line])
-        tariff_output_df = pandas.concat([tariff_output_df, new_df], ignore_index=True)
-        update_vas_dict(vas_dict, order_note)
+        # order_note = getAssetsResponse[0].text
+        #
+        # rp_substrings = extract_rp_substrings(order_note)
+        #
+        # # Split the multi-line string into lines
+        # order_note_lines = order_note.split('\n')
+        #
+        # # Iterate through each line and find the one that contains substrings of interest
+        # router_line = None
+        # for line in order_note_lines:
+        #     if 'router' in line or 'Wow' in line:
+        #         router_line = line
+        #         index_of_equal_sign = router_line.find('=')
+        #         router_line = router_line[:index_of_equal_sign].strip()
+        #         break
+        #
+        # isMvp = rp_substrings in mvp_rateplan_config
+        # isSylius = rp_substrings in sylius_rateplan_config
+        #
+        # new_line = {'tariffId': rp_substrings,
+        #             'tariffDesc': aggregated_rp_desc(extract_rp_names(order_note), isMvp, isSylius),
+        #             'isMvp': isMvp, 'isSylius': isSylius,
+        #             'router': router_line, 'stb': count_tv_hw(order_note)}
+        # new_df = pandas.DataFrame([new_line])
+        # tariff_output_df = pandas.concat([tariff_output_df, new_df], ignore_index=True)
+        # update_vas_dict(vas_dict, order_note)
+        print("1 'getAssetsResponseParameters' element found")
     else:
         print("No 'orderRequestAttributes/value' elements found")
 
-tariff_output_df.to_csv(OUTPUT_FILE_PATH, sep=';', index=False)
-
-vas_df = pandas.DataFrame(list(vas_dict.items()), columns=['Key', 'Value'])
-vas_df.to_csv(OUTPUT_FILE_PATH_VAS, sep=';', index=False)
+# output_df.to_csv(OUTPUT_FILE_PATH, sep=';', index=False)
 
